@@ -23,6 +23,11 @@ spec:
         spec:
           properties:
             monitorSecrets:
+              description: >-
+                The name of the secret object that stores the Snyk controller secrets.
+                The secret needs to contain the following data fields:
+                - integrationId
+                - dockercfg.json
               type: string
             image:
               properties:

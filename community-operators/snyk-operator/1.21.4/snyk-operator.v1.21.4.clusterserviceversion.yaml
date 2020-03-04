@@ -31,7 +31,7 @@ metadata:
     support: Snyk Ltd.
     repository: https://github.com/snyk/kubernetes-monitor
     description: |-
-      A Kubernetes Operator for creating and managing Snyk Kubernetes controller instances.
+      A Kubernetes Operator for creating and managing Snyk controller instances.
     certified: "false"
   name: snyk-operator.v1.21.4
   namespace: snyk-monitor
@@ -44,9 +44,19 @@ spec:
         kind: SnykMonitor
         version: v1alpha1
         description: Represents a deployment of the Snyk controller, which scans container images in the cluster for vulnerabilities.
+        resources:
+          - kind: Deployment
+            name: snyk-monitor
+            version: v1
+          - kind: Secret
+            name: snyk-monitor
+            version: v1
         specDescriptors:
           - description: >-
               The name of the secret object that stores the Snyk controller secrets.
+              The secret needs to contain the following data fields:
+              - integrationId
+              - dockercfg.json
             displayName: Snyk controller Secret name
             path: monitorSecrets
             x-descriptors:
@@ -97,6 +107,17 @@ spec:
     A Kubernetes Operator for creating and managing Snyk Kubernetes controller instances.
 
     Snyk integrates with Kubernetes, enabling you to import and test your running workloads and identify vulnerabilities in their associated images and configurations that might make those workloads less secure. Once imported, Snyk continues to monitor those workloads, identifying additional security issues as new images are deployed and the workload configuration changes.
+
+    ## Prerequisites
+
+    To start using the Operator and the Snyk controller that it manages, you will need to create a secret containing your Snyk integrationId and Docker config file:
+
+    ```
+    kubectl create namespace snyk-monitor
+    kubectl create secret generic snyk-monitor -n snyk-monitor --from-literal=dockercfg.json={} --from-literal=integrationId=${SNYK_INTEGRATION_ID}
+    ```
+
+    Refer to the [Snyk documentation](https://support.snyk.io/hc/en-us/articles/360003916138-Kubernetes-integration-overview) for more details. 
   displayName: Snyk Operator
   install:
     spec:
