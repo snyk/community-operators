@@ -27,7 +27,7 @@ metadata:
     capabilities: Basic Install
     categories: Developer Tools, Security
     containerImage: docker.io/snyk/kubernetes-operator:1.30.6
-    createdAt: 2020-08-14T16:36:05Z
+    createdAt: 2020-08-18T13:43:54Z
     support: Snyk Ltd.
     repository: https://github.com/snyk/kubernetes-monitor
     description: |-
@@ -256,4 +256,4 @@ spec:
     - 'audit'
     - 'scan'
     - 'scanning'
-  replaces: snyk-operator.v1.30.0
+  replaces: snyk-operator.v1.30.6
